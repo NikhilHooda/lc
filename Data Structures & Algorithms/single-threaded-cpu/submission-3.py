@@ -1,0 +1,26 @@
+class Solution:
+    def getOrder(self, tasks: List[List[int]]) -> List[int]:
+        #tasks = [[2, 1, 3], [3, 3, 4], [4, 4, 1], [4, 1, 2], [5, 2, 0]]
+        #heap = []
+        #pop
+        #ans = [3, 4]       
+        #time = 6
+        for i, t in enumerate(tasks):
+            t.append(i)
+        tasks.sort(key=lambda t: t[0])
+        print(tasks)
+
+        ans, minHeap = [], []
+        i, time = 0, tasks[0][0]
+
+        while minHeap or i < len(tasks):
+            while i < len(tasks) and time >= tasks[i][0]:
+                heapq.heappush(minHeap, (tasks[i][1], tasks[i][2]))
+                i += 1   
+            if minHeap:
+                processing, idx = heapq.heappop(minHeap)
+                ans.append(idx)
+                time += processing
+            else:
+                time = tasks[i][0]
+        return ans
